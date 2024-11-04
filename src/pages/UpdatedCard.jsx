@@ -28,7 +28,7 @@ const UpdatedCard = () => {
 
 
   return (
-    <div>
+    <div className=" pixel-font">
       {currentPage === "tokenid" && (
         <TokenId
           onNavigate={(nextPage, data) => handleNavigation(nextPage, data)}

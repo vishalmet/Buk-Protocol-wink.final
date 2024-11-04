@@ -43,7 +43,7 @@ const TokenId = ({ onNavigate }) => {
           <div className="flex flex-col items-center justify-center w-full">
             {/* Form */}
             <div className="flex flex-col items-center justify-center md:mt-10 sm:mt-6 border border-[#FFC4BB] shadow-lg md:py-20 sm:py-4 rounded-lg w-[90%]">
-              <label className="text-[#FFC4BB] md:text-md sm:text-xs md:mb-3 sm:mb-2">
+              <label className="text-[#FFC4BB] md:text-lg sm:text-sm md:mb-3 sm:mb-2">
                 Enter NFT ID
               </label>
               <input
@@ -54,7 +54,7 @@ const TokenId = ({ onNavigate }) => {
                   setError(null); // Clear error on change
                 }}
                 placeholder="Enter NFT ID"
-                className="border border-[#373737] bg-[#222222] sm:text-xs md:text-md rounded-md md:p-2 sm:py-1 mb-4 w-[80%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
+                className="border border-[#373737] bg-[#222222] text-xs sm:text-base rounded-md md:p-2 sm:py-1 mb-4 w-[80%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
               />
               <div className="flex w-full justify-center">
                 <button
