@@ -8,7 +8,7 @@ import icon3 from "../assets/updated/icon3.png";
 import hline from "../assets/updated/Line 60.png";
 import vline from "../assets/updated/Line 62.png";
 
-const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID}) => {
+const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, totalPrice }) => {
   const [bookingData, setBookingData] = useState(null);
   const [roomImage, setRoomImage] = useState(null);
 
@@ -35,7 +35,7 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID}) => {
             );
             if (mainImage) {
               setRoomImage(mainImage.hdUrl); // Set the roomImage to the hdUrl
-              
+
             }
           }
         } catch (error) {
@@ -52,11 +52,11 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID}) => {
     ? new Date(bookingData.data.checkIn)
     : null;
   const formattedDateCheckIn = checkInDate
-    ? `${checkInDate.getDate().toString().padStart(2, "0")}-${(
-        checkInDate.getMonth() + 1
-      )
-        .toString()
-        .padStart(2, "0")}-${checkInDate.getFullYear()}`
+    ? checkInDate.toLocaleDateString("en-GB", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
     : "";
 
   const checkOutDate = bookingData?.data?.checkOut
@@ -64,11 +64,12 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID}) => {
     : null;
   const formattedDateCheckOut = checkOutDate
     ? checkOutDate.toLocaleDateString("en-GB", {
-        day: "2-digit",
-        month: "long",
-        year: "numeric",
-      })
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
     : "";
+
 
   if (!bookingData) {
     return <div>Loading...</div>; // Show a loading state if data is not yet fetched
@@ -85,7 +86,10 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID}) => {
             backgroundPosition: "center",
           }}
         >
-          <div className="md:ml-[330px] sm:ml-[200px]">
+          
+          <div className=" flex justify-between">
+            <p className="bg-red-600 p-1 w-fit h-fit text-white text-xs rounded-md font-medium">{totalPrice} USDC</p>
+          <div className="">
             <img
               src={buk}
               alt=""
@@ -99,17 +103,17 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID}) => {
                 {[...Array(5)].map((_, index) => (
                   <span
                     key={index}
-                    className={`md:text-lg sm:text-md md:mr-1 ${
-                      index < bookingData.data.booking.property.stars
+                    className={`md:text-lg sm:text-md md:mr-1 ${index < bookingData.data.booking.property.stars
                         ? "text-red-600"
                         : "text-gray-500"
-                    }`}
+                      }`}
                   >
                     ★
                   </span>
                 ))}
               </div>
             </div>
+          </div>
           </div>
 
           {/* Content */}
@@ -127,7 +131,7 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID}) => {
               {/* Adjusted line */}
               <img src={hline} alt="" className="md:mt-4 sm:mt-2" />
               <div className="grid grid-cols-3 mt-3">
-                <div className="flex md:w-[60%]">
+                <div className="flex ">
                   <div className="flex-col flex">
                     <img
                       src={icon1}
@@ -145,11 +149,11 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID}) => {
                   <img
                     src={vline}
                     alt=""
-                    className="w-[1.5px] md:h-[73px] sm:h-[50px] ml-7 md:mt-1"
+                    className="w-[1.5px] md:h-[73px] sm:h-[50px] md:m-1 md:ml-5"
                   />
                 </div>
 
-                <div className="flex md:ml-[-35px] sm:ml-[-12px]">
+                <div className="flex ">
                   <div className="flex-col flex">
                     <img
                       src={icon2}
@@ -167,11 +171,11 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID}) => {
                   <img
                     src={vline}
                     alt=""
-                    className="w-[1.5px] md:h-[73px] sm:h-[50px] ml-5 md:mt-1"
+                    className="w-[1.5px] md:h-[73px] sm:h-[50px] md:m-1 md:ml-5"
                   />
                 </div>
 
-                <div className="flex md:ml-[-50px] sm:ml-[-10px]">
+                <div className="flex">
                   <div className="flex-col flex">
                     <img
                       src={icon3}
