@@ -40,6 +40,7 @@ const UpdatedCard = () => {
           nftData={nftData}
           setTokenID={setTokenID}
           tokenID = {tokenID}
+          totalPrice={totalPrice}
         />
       )}
       {currentPage === "stepone" && (

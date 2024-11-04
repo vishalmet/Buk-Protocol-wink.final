@@ -43,6 +43,9 @@ const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) =>
 
     fetchBookingData();
   }, [nftData]);
+
+
+  
   useEffect(() => {
     const fetchQuoteData = async () => {
       const token = localStorage.getItem("accessToken");
