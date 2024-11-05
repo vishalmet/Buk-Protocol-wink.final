@@ -33,7 +33,7 @@ const TokenId = ({ onNavigate }) => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">
-      <div className="relative md:w-[500px] md:h-[500px] sm:h-[350px] sm:w-[350px] bg-[#161616] shadow-lg p-2 flex flex-col items-center justify-center">
+      <div className="relative md:w-[500px] md:h-[500px] sm:h-[350px] sm:w-[300px] bg-[#161616] shadow-lg p-2 flex flex-col items-center justify-center">
         <div className="relative w-full flex flex-col items-center justify-between">
           <div>
             <img src={buk} alt="buk" className="md:w-[90px] w-[60px]" />

@@ -103,9 +103,9 @@ const [navigateTo, setNavigateTo] = useState(null); // New navigation state
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">
-      <div className="relative md:w-[500px] md:h-[500px] sm:h-[350px] sm:w-[350px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
+      <div className="relative md:w-[500px] md:h-[500px] sm:h-[350px] sm:w-[300px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
         <div
-          className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[335px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
+          className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[295px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
           style={{
             backgroundImage: `url(${roomImage})`,
             backgroundSize: "cover",
@@ -116,7 +116,7 @@ const [navigateTo, setNavigateTo] = useState(null); // New navigation state
             <img
               src={buk}
               alt=""
-              className="md:w-[70px] w-[50px] md:ml-12 sm:ml-[35px]"
+              className="md:w-[70px] w-[50px] md:ml-12 sm:ml-[20px]"
             />
           </div>
 
@@ -164,7 +164,7 @@ const [navigateTo, setNavigateTo] = useState(null); // New navigation state
               </div>
             </div>
 
-            <div className="flex flex-col items-center md:mt-9 sm:mt-5">
+            <div className="flex flex-col items-center md:mt-9 sm:mt-2">
               <p className="text-center text-white md:text-sm sm:text-xs font-light md:mb-5 sm:mb-1">
                 You're purchasing Superior room at the{" "}
                 {bookingData?.data?.booking?.property?.address?.address ||
@@ -180,7 +180,7 @@ const [navigateTo, setNavigateTo] = useState(null); // New navigation state
                 USDC {totalPrice} for 2 guests.
               </p>
 
-              <div className="flex w-full items-center justify-center pb-2 sm:mt-5">
+              <div className="flex w-full items-center justify-center pb-2 sm:mt-2">
                 <img
                   src={arrow}
                   alt=""
