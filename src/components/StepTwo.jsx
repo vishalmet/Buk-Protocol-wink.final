@@ -127,10 +127,10 @@ const StepTwo = ({ onNavigate, onBack, bookingData, nftData }) => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">
-      <div className="relative md:w-[500px] sm:w-[350px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
+      <div className="relative md:w-[500px] sm:w-[300px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
         {/* Background Image Division */}
         <div
-          className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[335px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
+          className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[295px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
           style={{
             backgroundImage: `url(${roomImage})`,
             backgroundSize: "cover",
@@ -141,7 +141,7 @@ const StepTwo = ({ onNavigate, onBack, bookingData, nftData }) => {
             <img
               src={buk}
               alt="buk"
-              className="md:w-[70px] w-[50px] md:ml-12 sm:ml-[35px]"
+              className="md:w-[70px] w-[50px] md:ml-12 sm:ml-[20px]"
             />
           </div>
         </div>
@@ -195,7 +195,7 @@ const StepTwo = ({ onNavigate, onBack, bookingData, nftData }) => {
           </div>
 
           {/* Form */}
-          <div className="flex flex-col items-center md:mt-2 sm:mt-5 w-full">
+          <div className="flex flex-col items-center md:mt-2 sm:mt-2 w-full">
             {/* <WalletConnect /> */}
 
             <input
@@ -212,8 +212,10 @@ const StepTwo = ({ onNavigate, onBack, bookingData, nftData }) => {
               onChange={(e) => setLastName(e.target.value)}
               className="border border-[#373737] bg-[#222222] sm:text-xs md:text-md rounded-md md:p-2 md:py-2 sm:py-1 md:mb-2 sm:mb-0 w-[70%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
             />
-            {errorMessage && <p className="text-red-500 text-xs">{errorMessage}</p>}
-            <ul className="list-disc list-inside text-[#FFC4BB] md:text-xs sm:text-[10px] md:mb-2 sm:mb-5">
+            {errorMessage && (
+              <p className="text-red-500 text-xs">{errorMessage}</p>
+            )}
+            <ul className="list-disc list-inside text-[#FFC4BB] md:text-xs sm:text-[10px] md:mb-2 sm:mb-2">
               <li>
                 <span className="ml-[-6px]">
                   Name should match govt ID proof
@@ -238,7 +240,6 @@ const StepTwo = ({ onNavigate, onBack, bookingData, nftData }) => {
         </div>
       </div>
     </div>
-
   );
 };
 

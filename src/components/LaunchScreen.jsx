@@ -72,7 +72,7 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, setTotalPrice 
 
 
   if (!bookingData) {
-    return <div>Loading...</div>; // Show a loading state if data is not yet fetched
+    return <div className="bg-black text-white items-center justify-center flex h-screen">Loading...</div>; // Show a loading state if data is not yet fetched
   }
 
   const TotalPrice = bookingData.data.listingDetails.price;
@@ -80,11 +80,11 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, setTotalPrice 
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">
-    <div className="relative md:w-[500px] sm:w-[350px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
+    <div className="relative md:w-[500px] sm:w-[300px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
       
       {/* Background Image Section */}
       <div
-        className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[335px] p-3 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
+        className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[295px] p-3 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
         style={{
           backgroundImage: `url(${roomImage})`,
           backgroundSize: "cover",

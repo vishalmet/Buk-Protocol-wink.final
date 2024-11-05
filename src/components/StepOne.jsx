@@ -19,6 +19,16 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
   const [checkIn, setCheckIn] = useState("");
   const [checkOut, setCheckOut] = useState("");
   const [roomImage, setRoomImage] = useState(null)
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+    if (emailError) setEmailError(""); // Clear email error on input
+  };
+
+  const handlePhoneChange = (e) => {
+    setPhone(e.target.value);
+    if (phoneError) setPhoneError(""); // Clear phone error on input
+  };
+
 
   useEffect(() => {
     const fetchBookingData = async () => {
@@ -105,6 +115,8 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return emailRegex.test(email);
   };
+
+
 
   // Function to validate phone number (10-digit)
   const validatePhone = (phone) => {
@@ -272,11 +284,10 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">
-      <div className="relative md:w-[500px] sm:w-[350px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
-
+      <div className="relative md:w-[500px] sm:w-[300px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
         {/* Background Image Division */}
         <div
-          className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[335px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
+          className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[295px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
           style={{
             backgroundImage: `url(${roomImage})`,
             backgroundSize: "cover",
@@ -287,13 +298,13 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
             <img
               src={buk}
               alt="buk"
-              className="md:w-[70px] w-[50px] md:ml-12 sm:ml-[35px]"
+              className="md:w-[70px] w-[50px] md:ml-12 sm:ml-[20px]"
             />
           </div>
         </div>
 
         {/* Content Division */}
-        <div className="bg-[#161616] w-full flex flex-col items-center sm:pt-3">
+        <div className="bg-[#161616] w-full flex flex-col items-center sm:pt-1">
           {/* Progress Steps */}
           <div className="">
             <div className="flex">
@@ -346,23 +357,23 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
             <input
               type="email"
               value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={handleEmailChange}
               placeholder="Email address"
               className="border border-[#373737] bg-[#222222] sm:text-xs md:text-base rounded-md md:p-2  sm:py-1 mb-2 w-full focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
             />
-            {emailError && <p className="text-red-500">{emailError}</p>}
+            {emailError && <p className="text-red-500 text-xs">{emailError}</p>}
 
             <input
               type="tel"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={handlePhoneChange}
               onKeyDown={handlePhoneKeyPress}
               placeholder="Mobile number"
               className="border border-[#373737] bg-[#222222] sm:text-xs md:text-base rounded-md md:p-2 md:py-2 sm:py-1 mb-2 w-full focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
             />
-            {phoneError && <p className="text-red-500">{phoneError}</p>}
+            {phoneError && <p className="text-red-500 text-xs">{phoneError}</p>}
 
-            <div className="flex w-full sm:mt-2 md:mt-2 items-center justify-center pb-2">
+            <div className="flex w-full  md:mt-2 items-center justify-center pb-2">
               <img
                 src={arrow}
                 alt="arrow"
@@ -381,7 +392,6 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
         </div>
       </div>
     </div>
-
   );
 };
 

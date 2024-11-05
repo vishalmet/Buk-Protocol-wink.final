@@ -10,7 +10,7 @@ export default {
         timmy: ['Timmy', 'sans-serif'],
       },
       screens: {
-        sm: "350px",
+        sm: "300px",
         md: "500px"// Custom small screen starting from 450px
       },
 
