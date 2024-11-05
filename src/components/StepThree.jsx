@@ -96,7 +96,7 @@ const [navigateTo, setNavigateTo] = useState(null); // New navigation state
     
       // Conditional redirection based on navigateTo state
       if (navigateTo === "success") {
-        return <div><SucessConfirmation nftData={nftData} /></div>; // Replace with your success component
+        return <div><SucessConfirmation nftData={nftData} tokenID={tokenID} /></div>; // Replace with your success component
       } else if (navigateTo === "resold") {
         return <div><Cancelled nftData={nftData} tokenID={tokenID} /></div>; // Replace with your error/resold component
       }
