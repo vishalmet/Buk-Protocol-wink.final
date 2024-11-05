@@ -5,6 +5,7 @@ import StepTwo from "../components/StepTwo";
 import StepThree from "../components/StepThree";
 import SucessConfirmation from "../components/SucessConfirmation";
 import TokenId from "../components/TokenId";
+import Cancelled from "../components/Cancelled";
 
 const UpdatedCard = () => {
   const [currentPage, setCurrentPage] = useState("tokenid");
@@ -26,9 +27,11 @@ const UpdatedCard = () => {
     setCurrentPage(nextPage);
   };
 
+  
+
 
   return (
-    <div>
+    <div className=" pixel-font">
       {currentPage === "tokenid" && (
         <TokenId
           onNavigate={(nextPage, data) => handleNavigation(nextPage, data)}
@@ -50,6 +53,7 @@ const UpdatedCard = () => {
           onNavigate={() => handleNavigation("steptwo")}
           onBack={() => handleNavigation("launch")}
           setData={setData}
+          setTotalPrice={setTotalPrice}
         />
       )}
       {currentPage === "steptwo" && (
@@ -58,7 +62,6 @@ const UpdatedCard = () => {
           bookingData={Data}
           onNavigate={() => handleNavigation("stepthree")}
           onBack={() => handleNavigation("stepone")}
-          setTotalPrice={setTotalPrice}
         />
       )}
       {currentPage === "stepthree" && (
@@ -66,6 +69,7 @@ const UpdatedCard = () => {
           nftData={nftData}
           bookingData={bookingData}
           onNavigate={() => handleNavigation("success")}
+          // onNavigate={(page) => handleNavigation(page)}
           onBack={() => handleNavigation("steptwo")}
           totalPrice={totalPrice}
           tokenID={tokenID}
@@ -75,6 +79,14 @@ const UpdatedCard = () => {
         <SucessConfirmation
           onNavigate={() => handleNavigation("launch")}
           tokenID={tokenID}
+          nftData={nftData}
+        />
+      )}
+      {currentPage === "resold" && (
+        <Cancelled
+          onNavigate={() => handleNavigation("launch")}
+          tokenID={tokenID}
+          nftData={nftData}
         />
       )}
     </div>

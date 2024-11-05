@@ -5,13 +5,17 @@ import step from '../assets/updated/step.png'
 import step1 from '../assets/updated/step1.png'
 import arrow from '../assets/updated/arrow.png'
 import step2 from '../assets/updated/step2.png'
-import WalletConnect from './Signer';
+// import WalletConnect from './Signer';
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) => {
+const StepTwo = ({ onNavigate, onBack, bookingData, nftData }) => {
   const [quoteData, setQuoteData] = useState(null);
   const [roomImage, setRoomImage] = useState(null);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
 
   useEffect(() => {
     const fetchBookingData = async () => {
@@ -45,7 +49,7 @@ const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) =>
   }, [nftData]);
 
 
-  
+
   useEffect(() => {
     const fetchQuoteData = async () => {
       const token = localStorage.getItem("accessToken");
@@ -69,10 +73,10 @@ const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) =>
             }
           );
           const data = response.data;
-          const totalPrice = data.price?.totalWithDiscount;
-          console.log("Total:", totalPrice)
-          setQuoteData(data); 
-          setTotalPrice(totalPrice);
+          // const totalPrice = data.price?.totalWithDiscount;
+          // console.log("Total:", totalPrice)
+          setQuoteData(data);
+          // setTotalPrice(totalPrice);
 
         } catch (error) {
           console.error("Error fetching hotel quote:", error); // Handle errors
@@ -86,13 +90,47 @@ const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) =>
     fetchQuoteData();
   }, [bookingData]);
 
+  const handleNext = () => {
+    // Reset the error message
+    setErrorMessage('');
+
+    // Validate inputs
+    if (!firstName.trim() || !lastName.trim()) {
+      setErrorMessage('Please enter your First Name and Last Name.');
+      return; // Stop if validation fails
+    }
+
+    // Call onNavigate if validation passes
+    onNavigate();
+  };
+
+  useEffect(() => {
+    const storedFirstName = sessionStorage.getItem("firstName");
+    const storedLastName = sessionStorage.getItem("lastName");
+
+    if (storedFirstName) setFirstName(storedFirstName);
+    if (storedLastName) setLastName(storedLastName);
+  }, []);
+
+  // Update sessionStorage whenever firstName or lastName changes
+  useEffect(() => {
+    sessionStorage.setItem("firstName", firstName);
+  }, [firstName]);
+
+  useEffect(() => {
+    sessionStorage.setItem("lastName", lastName);
+  }, [lastName]);
+
+
+
 
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">
-      <div className="relative md:w-[500px] md:h-[500px] sm:h-[350px] sm:w-[350px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
+      <div className="relative md:w-[500px] sm:w-[350px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
+        {/* Background Image Division */}
         <div
-          className="relative shadow-lg md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[335px] p-6 flex flex-col justify-between"
+          className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[335px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
           style={{
             backgroundImage: `url(${roomImage})`,
             backgroundSize: "cover",
@@ -102,100 +140,105 @@ const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) =>
           <div className="md:ml-[330px] sm:ml-[200px]">
             <img
               src={buk}
-              alt=""
+              alt="buk"
               className="md:w-[70px] w-[50px] md:ml-12 sm:ml-[35px]"
             />
           </div>
+        </div>
 
-          {/* content */}
-          <div className=" md:mt-48 sm:mt-32">
+        {/* Content Division */}
+        <div className="bg-[#161616] w-full flex flex-col items-center sm:pt-3">
+          {/* Progress Steps */}
+          <div className="">
             <div className="flex">
               <div className="flex ml-[-15px]">
-                <div className="text-white flex ">
+                <div className="text-white flex">
                   <img
                     src={step2}
-                    alt=""
+                    alt="step 1"
                     className="md:w-7 md:h-7 sm:w-5 sm:h-5"
                   />
                   <p className="md:text-xs sm:text-[10px] md:mt-2 sm:mt-1 md:ml-3 sm:ml-2">
                     Step 1
                   </p>
                 </div>
-
-                <div className=" bg-[#CA3F2A] h-[0.5px] md:w-[90px] sm:w-[50px] md:mt-4 sm:mt-3 md:ml-3 sm:ml-2"></div>
+                <div className="bg-[#CA3F2A] h-[0.5px] md:w-[80px] sm:w-[50px] md:mt-4 sm:mt-3 md:ml-3 sm:ml-2"></div>
               </div>
 
               <div className="flex ml-2">
-                <div className="text-white flex ">
+                <div className="text-white flex">
                   <img
                     src={step}
-                    alt=""
+                    alt="step 2"
                     className="md:w-7 md:h-7 sm:w-5 sm:h-5"
                   />
                   <p className="md:text-xs sm:text-[10px] md:mt-2 sm:mt-1 md:ml-3 sm:ml-2">
                     Step 2
                   </p>
                 </div>
-
-                <div className=" bg-[#CA3F2A] h-[0.5px] md:w-[90px] sm:w-[50px] md:mt-4 sm:mt-3 md:ml-3 sm:ml-2"></div>
+                <div className="bg-[#CA3F2A] h-[0.5px] md:w-[80px] sm:w-[50px] md:mt-4 sm:mt-3 md:ml-3 sm:ml-2"></div>
               </div>
 
               <div className="flex ml-2">
-                <div className="text-white flex ">
+                <div className="text-white flex">
                   <img
                     src={step1}
-                    alt=""
+                    alt="step 3"
                     className="md:w-7 md:h-7 sm:w-5 sm:h-5"
                   />
                   <p className="md:text-xs sm:text-[10px] md:mt-2 sm:mt-1 md:ml-3 sm:ml-2 text-[#B1B1B1]">
                     Step 3
                   </p>
                 </div>
-
-                {/* <div className=' bg-[#CA3F2A] h-[0.5px] w-[80px] mt-4 ml-2'></div> */}
               </div>
             </div>
+          </div>
 
-            {/* form */}
-            <div className="flex flex-col items-center  md:mt-2 sm:mt-5 ">
-              <WalletConnect />
+          {/* Form */}
+          <div className="flex flex-col items-center md:mt-2 sm:mt-5 w-full">
+            {/* <WalletConnect /> */}
 
-              <input
-                type="text"
-                placeholder="First Name"
-                className="border border-[#373737] bg-[#222222] sm:text-xs md:text-md rounded-md  md:p-2 md:py-2 sm:py-1 mb-2 w-[70%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
+            <input
+              type="text"
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="border border-[#373737] bg-[#222222] sm:text-xs md:text-md rounded-md md:p-2 md:py-2 sm:py-1 mb-2 w-[70%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="border border-[#373737] bg-[#222222] sm:text-xs md:text-md rounded-md md:p-2 md:py-2 sm:py-1 md:mb-2 sm:mb-0 w-[70%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
+            />
+            {errorMessage && <p className="text-red-500 text-xs">{errorMessage}</p>}
+            <ul className="list-disc list-inside text-[#FFC4BB] md:text-xs sm:text-[10px] md:mb-2 sm:mb-5">
+              <li>
+                <span className="ml-[-6px]">
+                  Name should match govt ID proof
+                </span>
+              </li>
+            </ul>
+            <div className="flex w-full items-center justify-center pb-2">
+              <img
+                src={arrow}
+                alt="arrow"
+                className="md:w-9 md:h-9 sm:w-6 sm:h-6 mr-4 cursor-pointer"
+                onClick={onBack}
               />
-              <input
-                type="text"
-                placeholder="Last Name"
-                className="border border-[#373737] bg-[#222222] sm:text-xs md:text-md rounded-md md:p-2 md:py-2 sm:py-1 md:mb-2 sm:mb-0  w-[70%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
-              />
-              <ul className="list-disc list-inside text-[#FFC4BB] md:text-xs sm:text-[10px] md:mb-2 sm:mb-5">
-                <li>
-                  <span className="ml-[-6px]">
-                    Name should match govt ID proof
-                  </span>
-                </li>
-              </ul>
-              <div className="flex w-full items-center justify-center ">
-                <img
-                  src={arrow}
-                  alt=""
-                  className="md:w-9 md:h-9 sm:w-6 sm:h-6 mr-4 cursor-pointer"
-                  onClick={onBack}
-                />
-                <button
-                  className="bg-[#CA3F2A] sm:text-xs  text-white md:px-[110px] sm:px-[68px] md:py-1 sm:py-1 rounded-md md:text-lg border-[#FFE3E3] border border-opacity-50  "
-                  onClick={onNavigate}
-                >
-                  Next
-                </button>
-              </div>
+              <button
+                className="bg-[#CA3F2A] sm:text-xs text-white md:px-[110px] sm:px-[68px] md:py-1 sm:py-1 rounded-md md:text-lg border-[#FFE3E3] border border-opacity-50"
+                onClick={handleNext}
+              >
+                Next
+              </button>
             </div>
           </div>
         </div>
       </div>
     </div>
+
   );
 };
 

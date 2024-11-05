@@ -14,3 +14,15 @@ input::placeholder {
   text-align: center;
   font-size: medium;
 }
+
+
+@font-face {
+  font-family: 'GraphicPixel';
+  src: url('/fonts/graphicpixel.ttf') format('truetype');
+}
+
+.pixel-font {
+  font-family: 'GraphicPixel';
+  font-weight: normal;
+  font-style: normal;
+}

@@ -6,12 +6,16 @@ import arrow from "../assets/updated/arrow.png";
 import step2 from "../assets/updated/step2.png";
 import { buyRoom } from "../ContractIntegration";
 import axios from "axios";
+import SucessConfirmation from "./SucessConfirmation";
+import Cancelled from "./Cancelled";
 
 const StepThree = ({ onNavigate, onBack, totalPrice, tokenID, nftData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const _tokenId = tokenID;
   const [roomImage, setRoomImage] = useState(null);
 const [bookingData, setBookingData] = useState(null);
+const [navigateTo, setNavigateTo] = useState(null); // New navigation state
+
 
   useEffect(() => {
     const fetchBookingData = async () => {
@@ -67,31 +71,41 @@ const [bookingData, setBookingData] = useState(null);
         })
       : "";
 
-  const handleBuyRoom = async () => {
-    setIsLoading(true);
-    console.log("nookinvsd");
-    if (_tokenId) {
-      try {
-        await buyRoom(_tokenId);
-        // After successful transaction, navigate to success page
-        onNavigate("success");
-      } catch (error) {
-        console.error("Error executing buyRoom:", error);
-        // You might want to show an error message to the user here
-      } finally {
-        setIsLoading(false);
+      const handleBuyRoom = async () => {
+        setIsLoading(true);
+        console.log("Processing...");
+        if (_tokenId) {
+          try {
+            await buyRoom(_tokenId);
+            setNavigateTo("success"); // Update navigateTo based on successful outcome
+          } catch (error) {
+            console.error("Error executing buyRoom:", error);
+            setNavigateTo("resold"); // Update navigateTo for error case
+          } finally {
+            setIsLoading(false);
+          }
+        } else {
+          console.error("Token ID is not set");
+          setIsLoading(false);
+        }
+      };
+    
+      const handleBuyRoomClick = async () => {
+        await handleBuyRoom(); // Executes buyRoom and updates navigateTo based on outcome
+      };
+    
+      // Conditional redirection based on navigateTo state
+      if (navigateTo === "success") {
+        return <div><SucessConfirmation /></div>; // Replace with your success component
+      } else if (navigateTo === "resold") {
+        return <div><Cancelled /></div>; // Replace with your error/resold component
       }
-    } else {
-      console.error("Token ID is not set");
-      setIsLoading(false);
-    }
-  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">
       <div className="relative md:w-[500px] md:h-[500px] sm:h-[350px] sm:w-[350px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
         <div
-          className="relative shadow-lg md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[335px] p-6 flex flex-col justify-between"
+          className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[335px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
           style={{
             backgroundImage: `url(${roomImage})`,
             backgroundSize: "cover",
@@ -119,7 +133,7 @@ const [bookingData, setBookingData] = useState(null);
                     Step 1
                   </p>
                 </div>
-                <div className="bg-[#CA3F2A] h-[0.5px] md:w-[90px] sm:w-[50px] md:mt-4 sm:mt-3 md:ml-3 sm:ml-2"></div>
+                <div className="bg-[#CA3F2A] h-[0.5px] md:w-[80px] sm:w-[50px] md:mt-4 sm:mt-3 md:ml-3 sm:ml-2"></div>
               </div>
 
               <div className="flex ml-2">
@@ -133,7 +147,7 @@ const [bookingData, setBookingData] = useState(null);
                     Step 2
                   </p>
                 </div>
-                <div className="bg-[#CA3F2A] h-[0.5px] md:w-[90px] sm:w-[50px] md:mt-4 sm:mt-3 md:ml-3 sm:ml-2"></div>
+                <div className="bg-[#CA3F2A] h-[0.5px] md:w-[80px] sm:w-[50px] md:mt-4 sm:mt-3 md:ml-3 sm:ml-2"></div>
               </div>
 
               <div className="flex ml-2">
@@ -166,7 +180,7 @@ const [bookingData, setBookingData] = useState(null);
                 USDC {totalPrice} for 2 guests.
               </p>
 
-              <div className="flex w-full items-center justify-center md:mt-7 sm:mt-5">
+              <div className="flex w-full items-center justify-center pb-2 sm:mt-5">
                 <img
                   src={arrow}
                   alt=""
@@ -175,7 +189,7 @@ const [bookingData, setBookingData] = useState(null);
                 />
                 <button
                   className="bg-[#CA3F2A] sm:text-xs text-white md:px-[110px] sm:px-[68px] md:py-1 sm:py-1 rounded-md md:text-lg border-[#FFE3E3] border border-opacity-50"
-                  onClick={handleBuyRoom}
+                  onClick={handleBuyRoomClick}
                   disabled={isLoading}
                 >
                   {isLoading ? "Processing..." : "Pay Now"}
