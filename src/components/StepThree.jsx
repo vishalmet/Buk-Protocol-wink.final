@@ -6,12 +6,16 @@ import arrow from "../assets/updated/arrow.png";
 import step2 from "../assets/updated/step2.png";
 import { buyRoom } from "../ContractIntegration";
 import axios from "axios";
+import SucessConfirmation from "./SucessConfirmation";
+import Cancelled from "./Cancelled";
 
 const StepThree = ({ onNavigate, onBack, totalPrice, tokenID, nftData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const _tokenId = tokenID;
   const [roomImage, setRoomImage] = useState(null);
 const [bookingData, setBookingData] = useState(null);
+const [navigateTo, setNavigateTo] = useState(null); // New navigation state
+
 
   useEffect(() => {
     const fetchBookingData = async () => {
@@ -67,29 +71,35 @@ const [bookingData, setBookingData] = useState(null);
         })
       : "";
 
-  const handleBuyRoom = async () => {
-    setIsLoading(true);
-    console.log("Processing...");
-    if (_tokenId) {
-      try {
-        await buyRoom(_tokenId);
-        // After successful transaction, navigate to success page
-        onNavigate("success");
-      } catch (error) {
-        console.error("Error executing buyRoom:", error);
-        // onNavigate("resold");
-      } finally {
-        setIsLoading(false);
+      const handleBuyRoom = async () => {
+        setIsLoading(true);
+        console.log("Processing...");
+        if (_tokenId) {
+          try {
+            await buyRoom(_tokenId);
+            setNavigateTo("success"); // Update navigateTo based on successful outcome
+          } catch (error) {
+            console.error("Error executing buyRoom:", error);
+            setNavigateTo("resold"); // Update navigateTo for error case
+          } finally {
+            setIsLoading(false);
+          }
+        } else {
+          console.error("Token ID is not set");
+          setIsLoading(false);
+        }
+      };
+    
+      const handleBuyRoomClick = async () => {
+        await handleBuyRoom(); // Executes buyRoom and updates navigateTo based on outcome
+      };
+    
+      // Conditional redirection based on navigateTo state
+      if (navigateTo === "success") {
+        return <div><SucessConfirmation /></div>; // Replace with your success component
+      } else if (navigateTo === "resold") {
+        return <div><Cancelled /></div>; // Replace with your error/resold component
       }
-    } else {
-      console.error("Token ID is not set");
-      setIsLoading(false);
-    }
-  };
-
-  const handleBuyRoomClick = async () => {
-    await handleBuyRoom(); // Executes buyRoom and navigates based on outcome
-  };
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">

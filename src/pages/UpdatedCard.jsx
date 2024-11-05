@@ -27,6 +27,8 @@ const UpdatedCard = () => {
     setCurrentPage(nextPage);
   };
 
+  
+
 
   return (
     <div className=" pixel-font">
@@ -67,6 +69,7 @@ const UpdatedCard = () => {
           nftData={nftData}
           bookingData={bookingData}
           onNavigate={() => handleNavigation("success")}
+          // onNavigate={(page) => handleNavigation(page)}
           onBack={() => handleNavigation("steptwo")}
           totalPrice={totalPrice}
           tokenID={tokenID}

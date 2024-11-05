@@ -246,6 +246,23 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData,setTotalPri
     handleNext(); // Move to the next step after signing
   };
 
+  useEffect(() => {
+    const storedEmail = sessionStorage.getItem("email");
+    const storedPhone = sessionStorage.getItem("phone");
+
+    if (storedEmail) setEmail(storedEmail);
+    if (storedPhone) setPhone(storedPhone);
+  }, []);
+
+  // Update sessionStorage whenever email or phone changes
+  useEffect(() => {
+    sessionStorage.setItem("email", email);
+  }, [email]);
+
+  useEffect(() => {
+    sessionStorage.setItem("phone", phone);
+  }, [phone]);
+
   // const shortenAddress = (address) => {
   //   if (!address) return "";
   //   return `${address.substring(0, 6)}...${address.substring(
