@@ -8,7 +8,7 @@ import icon3 from "../assets/updated/icon3.png";
 import hline from "../assets/updated/Line 60.png";
 import vline from "../assets/updated/Line 62.png";
 
-const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, totalPrice }) => {
+const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, setTotalPrice }) => {
   const [bookingData, setBookingData] = useState(null);
   const [roomImage, setRoomImage] = useState(null);
 
@@ -75,6 +75,9 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, totalPrice }) 
     return <div>Loading...</div>; // Show a loading state if data is not yet fetched
   }
 
+  const TotalPrice = bookingData.data.listingDetails.price;
+  setTotalPrice(TotalPrice);
+
   return (
     <div className="flex justify-center items-center h-screen bg-black">
     <div className="relative md:w-[500px] sm:w-[350px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
@@ -90,7 +93,7 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, totalPrice }) 
       >
         <div className="flex justify-between">
           <p className="bg-red-600 p-1 w-fit h-fit text-white text-xs rounded-md font-medium">
-            {totalPrice} USDC
+            {TotalPrice} USDC
           </p>
           <div>
             <img src={buk} alt="" className="md:w-[70px] w-[50px] md:ml-12 sm:ml-[35px]" />

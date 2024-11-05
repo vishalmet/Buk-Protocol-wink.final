@@ -5,7 +5,7 @@ import tick from '../assets/updated/tick.png'
 import axios from "axios";
 
 
-const SucessConfirmation = ({tokenID, nftData}) => {
+const SucessConfirmation = ({tokenID, nftData, setTokenID}) => {
   const [transactionId, setTransactionId] = useState('');
   const [roomImage, setRoomImage] = useState(null);
 
@@ -21,6 +21,8 @@ const SucessConfirmation = ({tokenID, nftData}) => {
           console.log(data);
 
           const tokenID = nftData;
+          setTokenID(tokenID);
+
 
           if (data && data.status === true) {
             // Find the image with mainImage set to true and set roomImage

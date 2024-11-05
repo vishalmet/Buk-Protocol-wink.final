@@ -43,7 +43,8 @@ const UpdatedCard = () => {
           nftData={nftData}
           setTokenID={setTokenID}
           tokenID = {tokenID}
-          totalPrice={totalPrice}
+          setTotalPrice={setTotalPrice}
+          bookingData={bookingData}
         />
       )}
       {currentPage === "stepone" && (
@@ -53,7 +54,6 @@ const UpdatedCard = () => {
           onNavigate={() => handleNavigation("steptwo")}
           onBack={() => handleNavigation("launch")}
           setData={setData}
-          setTotalPrice={setTotalPrice}
         />
       )}
       {currentPage === "steptwo" && (
@@ -80,6 +80,7 @@ const UpdatedCard = () => {
           onNavigate={() => handleNavigation("launch")}
           tokenID={tokenID}
           nftData={nftData}
+          setTokenID={setTokenID}
         />
       )}
       {currentPage === "resold" && (

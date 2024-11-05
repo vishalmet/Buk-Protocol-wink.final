@@ -9,7 +9,7 @@ import { BrowserProvider } from "ethers";
 
 import { id } from "ethers";
 
-const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData, setTotalPrice }) => {
+const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -94,11 +94,11 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData, setTotalPr
       fetchHotelData();
     }
   }, [propertyId, checkIn, checkOut]);
-  const TotalPrice = bookingData.data.listingDetails.price;
-  setTotalPrice(TotalPrice);
-  console.log('====================================');
-  console.log(TotalPrice);
-  console.log('====================================');
+  // const TotalPrice = bookingData.data.listingDetails.price;
+  // setTotalPrice(TotalPrice);
+  // console.log('====================================');
+  // console.log(TotalPrice);
+  // console.log('====================================');
 
   // Function to validate email
   const validateEmail = (email) => {
