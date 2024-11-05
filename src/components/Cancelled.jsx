@@ -43,7 +43,7 @@ const Cancelled = ({nftData}) => {
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">
-      <div className="relative md:w-[500px] md:h-[500px] h-fit sm:w-[300px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
+      <div className="relative md:w-[500px] md:h-[500px] h-[310px] sm:w-[300px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
         <div
           className="relative md:w-[485px] md:h-[230px] sm:h-[120px] sm:w-[280px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
           style={{
