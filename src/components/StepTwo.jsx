@@ -5,13 +5,17 @@ import step from '../assets/updated/step.png'
 import step1 from '../assets/updated/step1.png'
 import arrow from '../assets/updated/arrow.png'
 import step2 from '../assets/updated/step2.png'
-import WalletConnect from './Signer';
+// import WalletConnect from './Signer';
 import { useEffect, useState } from "react";
 import axios from "axios";
 
-const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) => {
+const StepTwo = ({ onNavigate, onBack, bookingData, nftData }) => {
   const [quoteData, setQuoteData] = useState(null);
   const [roomImage, setRoomImage] = useState(null);
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+
 
   useEffect(() => {
     const fetchBookingData = async () => {
@@ -69,10 +73,10 @@ const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) =>
             }
           );
           const data = response.data;
-          const totalPrice = data.price?.totalWithDiscount;
-          console.log("Total:", totalPrice)
+          // const totalPrice = data.price?.totalWithDiscount;
+          // console.log("Total:", totalPrice)
           setQuoteData(data); 
-          setTotalPrice(totalPrice);
+          // setTotalPrice(totalPrice);
 
         } catch (error) {
           console.error("Error fetching hotel quote:", error); // Handle errors
@@ -85,6 +89,21 @@ const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) =>
     // Call the function to fetch data once when conditions are met
     fetchQuoteData();
   }, [bookingData]);
+
+  const handleNext = () => {
+    // Reset the error message
+    setErrorMessage('');
+
+    // Validate inputs
+    if (!firstName.trim() || !lastName.trim()) {
+      setErrorMessage('Please enter your First Name and Last Name.');
+      return; // Stop if validation fails
+    }
+
+    // Call onNavigate if validation passes
+    onNavigate();
+  };
+
 
 
 
@@ -159,18 +178,23 @@ const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) =>
   
         {/* Form */}
         <div className="flex flex-col items-center md:mt-2 sm:mt-5 w-full">
-          <WalletConnect />
+          {/* <WalletConnect /> */}
   
           <input
-            type="text"
-            placeholder="First Name"
-            className="border border-[#373737] bg-[#222222] sm:text-xs md:text-md rounded-md md:p-2 md:py-2 sm:py-1 mb-2 w-[70%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
-          />
-          <input
-            type="text"
-            placeholder="Last Name"
-            className="border border-[#373737] bg-[#222222] sm:text-xs md:text-md rounded-md md:p-2 md:py-2 sm:py-1 md:mb-2 sm:mb-0 w-[70%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
-          />
+              type="text"
+              placeholder="First Name"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              className="border border-[#373737] bg-[#222222] sm:text-xs md:text-md rounded-md md:p-2 md:py-2 sm:py-1 mb-2 w-[70%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
+            />
+            <input
+              type="text"
+              placeholder="Last Name"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              className="border border-[#373737] bg-[#222222] sm:text-xs md:text-md rounded-md md:p-2 md:py-2 sm:py-1 md:mb-2 sm:mb-0 w-[70%] max-w-[400px] focus:outline-none focus:ring-[0.5px] focus:ring-[#FFCACA] text-white text-center"
+            />
+            {errorMessage && <p className="text-red-500 text-xs">{errorMessage}</p>}
           <ul className="list-disc list-inside text-[#FFC4BB] md:text-xs sm:text-[10px] md:mb-2 sm:mb-5">
             <li>
               <span className="ml-[-6px]">
@@ -187,7 +211,7 @@ const StepTwo = ({ onNavigate, onBack, bookingData, setTotalPrice, nftData }) =>
             />
             <button
               className="bg-[#CA3F2A] sm:text-xs text-white md:px-[110px] sm:px-[68px] md:py-1 sm:py-1 rounded-md md:text-lg border-[#FFE3E3] border border-opacity-50"
-              onClick={onNavigate}
+              onClick={handleNext}
             >
               Next
             </button>

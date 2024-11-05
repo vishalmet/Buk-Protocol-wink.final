@@ -5,9 +5,11 @@ import buk from "../assets/updated/buk.png";
 import step from "../assets/updated/step.png";
 import step1 from "../assets/updated/step1.png";
 import arrow from "../assets/updated/arrow.png";
+import { BrowserProvider } from "ethers";
+
 import { id } from "ethers";
 
-const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
+const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData,setTotalPrice }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -92,6 +94,11 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
       fetchHotelData();
     }
   }, [propertyId, checkIn, checkOut]);
+  const TotalPrice = bookingData.data.listingDetails.price;
+  setTotalPrice(TotalPrice);
+  console.log('====================================');
+  console.log(TotalPrice);
+  console.log('====================================');
 
   // Function to validate email
   const validateEmail = (email) => {
@@ -101,14 +108,14 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
 
   // Function to validate phone number (10-digit)
   const validatePhone = (phone) => {
-    const phoneRegex = /^[0-9]{10}$/;
+    const phoneRegex = /^\+?\d{10}$/; // Optional + at the beginning, followed by exactly 10 digits
     return phoneRegex.test(phone);
   };
-
+  
   // Function to handle the Next button click
   const handleNext = () => {
     let isValid = true;
-
+  
     // Validate email
     if (!validateEmail(email)) {
       setEmailError("Invalid email address");
@@ -116,7 +123,7 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
     } else {
       setEmailError("");
     }
-
+  
     // Validate phone number
     if (!validatePhone(phone)) {
       setPhoneError("Invalid phone number (10 digits required)");
@@ -124,20 +131,127 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
     } else {
       setPhoneError("");
     }
-
+  
     // Proceed if all inputs are valid
     if (isValid) {
       fetchHotelData();
       onNavigate();
     }
   };
-
+  
   // Handle key press for phone number input
   const handlePhoneKeyPress = (e) => {
-    if (!/[0-9]/.test(e.key) && e.key !== "Backspace") {
+    // Allow numbers, Backspace, and the + symbol
+    if (!/[0-9+\-]/.test(e.key) && e.key !== "Backspace") {
       e.preventDefault();
     }
   };
+  
+  const [signature, setSignature] = useState("");
+  const [error, setError] = useState("");
+  const [isConnecting, setIsConnecting] = useState(false);
+  const [loginToken, setLoginToken] = useState("");
+  const [walletAddress, setWalletAddress] = useState("");
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const getLoginMessage = (timestamp) => {
+    return `Signature for login authentication: ${timestamp}`;
+  };
+
+  const handleAuth = async (address, signature, timestamp) => {
+    try {
+      const response = await fetch(
+        "https://api.polygon.dassets.xyz/auth/user/login",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            userId: address,
+            loginToken: timestamp,
+            signature: signature,
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Authentication failed");
+      }
+
+      const data = await response.json();
+      const jwt = data.data.accessToken;
+      console.log('====================================');
+      console.log("signer res", data);
+      console.log('====================================');
+
+      if (!jwt) {
+        throw new Error("JWT not found in the response");
+      }
+
+      // Store token in localStorage under "accessToken"
+      localStorage.setItem("accessToken", jwt);
+      setIsAuthenticated(true);
+
+      return data;
+    } catch (err) {
+      console.error("Authentication error:", err);
+      throw new Error(err.message || "Authentication failed");
+    }
+  };
+
+
+  const connectAndSign = async () => {
+    setIsConnecting(true);
+    setError("");
+    setSignature("");
+    setLoginToken("");
+
+    try {
+      if (!window.ethereum) {
+        throw new Error("MetaMask is not installed!");
+      }
+
+      // Create provider and request accounts
+      const provider = new BrowserProvider(window.ethereum);
+      await provider.send("eth_requestAccounts", []);
+
+      // Get signer and address
+      const signer = await provider.getSigner();
+      const address = await signer.getAddress();
+      setWalletAddress(address);
+
+      // Create unix timestamp for login token
+      const timestamp = Date.now();
+      setLoginToken(timestamp.toString());
+
+      // Sign message with timestamp
+      const message = getLoginMessage(timestamp);
+      const signedMessage = await signer.signMessage(message);
+      setSignature(signedMessage);
+
+      // Authenticate with the server
+      await handleAuth(address, signedMessage, timestamp);
+    } catch (err) {
+      console.error("Error:", err);
+      setError(err instanceof Error ? err.message : "Unknown error occurred");
+      // Optionally handle authentication failure
+    } finally {
+      setIsConnecting(false);
+    }
+  };
+
+  const handleButtonClick = async () => {
+    await connectAndSign(); // Wait for connection and signing to complete
+    handleNext(); // Move to the next step after signing
+  };
+
+  // const shortenAddress = (address) => {
+  //   if (!address) return "";
+  //   return `${address.substring(0, 6)}...${address.substring(
+  //     address.length - 4
+  //   )}`;
+  // };
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">
@@ -240,7 +354,8 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
               />
               <button
                 className="bg-[#CA3F2A] sm:text-xs text-white md:px-[110px] sm:px-[68px] md:py-1 sm:py-1 rounded-md md:text-lg border-[#FFE3E3] border border-opacity-50"
-                onClick={handleNext}
+                onClick={handleButtonClick} // Call the combined handler
+        disabled={isConnecting} 
               >
                 Next
               </button>

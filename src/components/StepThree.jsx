@@ -69,7 +69,7 @@ const [bookingData, setBookingData] = useState(null);
 
   const handleBuyRoom = async () => {
     setIsLoading(true);
-    console.log("nookinvsd");
+    console.log("Processing...");
     if (_tokenId) {
       try {
         await buyRoom(_tokenId);
@@ -77,7 +77,7 @@ const [bookingData, setBookingData] = useState(null);
         onNavigate("success");
       } catch (error) {
         console.error("Error executing buyRoom:", error);
-        // You might want to show an error message to the user here
+        // onNavigate("resold");
       } finally {
         setIsLoading(false);
       }
@@ -85,6 +85,10 @@ const [bookingData, setBookingData] = useState(null);
       console.error("Token ID is not set");
       setIsLoading(false);
     }
+  };
+
+  const handleBuyRoomClick = async () => {
+    await handleBuyRoom(); // Executes buyRoom and navigates based on outcome
   };
 
   return (
@@ -166,7 +170,7 @@ const [bookingData, setBookingData] = useState(null);
                 USDC {totalPrice} for 2 guests.
               </p>
 
-              <div className="flex w-full items-center justify-center md:mt-7 sm:mt-5">
+              <div className="flex w-full items-center justify-center pb-2 sm:mt-5">
                 <img
                   src={arrow}
                   alt=""
@@ -175,7 +179,7 @@ const [bookingData, setBookingData] = useState(null);
                 />
                 <button
                   className="bg-[#CA3F2A] sm:text-xs text-white md:px-[110px] sm:px-[68px] md:py-1 sm:py-1 rounded-md md:text-lg border-[#FFE3E3] border border-opacity-50"
-                  onClick={handleBuyRoom}
+                  onClick={handleBuyRoomClick}
                   disabled={isLoading}
                 >
                   {isLoading ? "Processing..." : "Pay Now"}
