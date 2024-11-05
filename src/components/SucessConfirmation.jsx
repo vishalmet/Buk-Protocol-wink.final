@@ -5,7 +5,7 @@ import tick from '../assets/updated/tick.png'
 import axios from "axios";
 
 
-const SucessConfirmation = ({tokenID, nftData, setTokenID}) => {
+const SucessConfirmation = ({tokenID, nftData}) => {
   const [transactionId, setTransactionId] = useState('');
   const [roomImage, setRoomImage] = useState(null);
 
@@ -20,8 +20,7 @@ const SucessConfirmation = ({tokenID, nftData, setTokenID}) => {
           const data = response.data;
           console.log(data);
 
-          const tokenID = nftData;
-          setTokenID(tokenID);
+          
 
 
           if (data && data.status === true) {
