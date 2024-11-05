@@ -84,7 +84,7 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, setTotalPrice 
       
       {/* Background Image Section */}
       <div
-        className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[295px] p-3 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
+        className="relative md:w-[485px] md:h-[230px] sm:h-[120px] sm:w-[280px] p-3 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
         style={{
           backgroundImage: `url(${roomImage})`,
           backgroundSize: "cover",
@@ -92,12 +92,12 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, setTotalPrice 
         }}
       >
         <div className="flex justify-between">
-          <p className="bg-red-600 p-1 w-fit h-fit text-white text-xs rounded-md font-medium">
+          <p className="bg-red-600 p-1 w-fit h-fit text-white md:text-xs text-[10px] rounded-md font-medium">
             {TotalPrice} USDC
           </p>
           <div>
             <img src={buk} alt="" className="md:w-[70px] w-[50px] md:ml-12 sm:ml-[35px]" />
-            <div className="flex items-center md:mt-[140px] sm:mt-[85px] bg-black/40 w-fit gap-2 px-2 rounded-sm">
+            <div className="flex items-center md:mt-[140px] sm:mt-[55px] bg-black/40 w-fit gap-2 px-2 rounded-sm">
               <span className="text-white md:text-sm sm:text-xs">
                 {bookingData.data.booking.property.stars}
               </span>
@@ -123,12 +123,12 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, setTotalPrice 
             <span className="ml-[-6px]">{bookingData.data.roomName}</span>
           </li>
         </ul>
-        <h1 className="text-white md:text-lg sm:text-sm">
+        <h1 className="text-white md:text-lg sm:text-xs">
           {bookingData.data.booking.property.name}
         </h1>
   
-        <img src={hline} alt="" className="mt-2" />
-        <div className="grid grid-cols-2 mt-3">
+        <img src={hline} alt="" className="md:mt-2 mt-1" />
+        <div className="grid grid-cols-2 md:mt-3 mt-1.5">
           <div className="grid grid-cols-2">
             <div className="flex">
               <div className="flex-col flex">
@@ -159,7 +159,7 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, setTotalPrice 
         </div>
         
         {/* Button */}
-        <div className="flex justify-center items-center gap-4 md:mt-6 sm:mt-2">
+        <div className="flex justify-center items-center gap-4 md:mt-6 sm:mt-1.5">
           <a href={`https://polygon.dassets.xyz/hotels/nft-details?nftId=${tokenID}`} target="_blank" rel="noopener noreferrer" className="text-white bg-[#331D19] border border-[#7B3F26] md:px-9 md:py-2 sm:text-xs sm:px-4 sm:py-1 md:text-[16px] rounded-lg ">
             Hotel Details
           </a>

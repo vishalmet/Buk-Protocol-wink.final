@@ -105,7 +105,7 @@ const [navigateTo, setNavigateTo] = useState(null); // New navigation state
     <div className="flex justify-center items-center h-screen bg-black">
       <div className="relative md:w-[500px] md:h-[500px] sm:h-[350px] sm:w-[300px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
         <div
-          className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[295px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
+          className="relative md:w-[485px] md:h-[230px] sm:h-[120px] sm:w-[280px]  p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
           style={{
             backgroundImage: `url(${roomImage})`,
             backgroundSize: "cover",
@@ -120,7 +120,7 @@ const [navigateTo, setNavigateTo] = useState(null); // New navigation state
             />
           </div>
 
-          <div className="md:mt-48 sm:mt-32">
+          <div className="md:mt-48 sm:mt-24">
             <div className="flex">
               <div className="flex ml-[-15px]">
                 <div className="text-white flex">

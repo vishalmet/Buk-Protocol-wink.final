@@ -130,7 +130,7 @@ const StepTwo = ({ onNavigate, onBack, bookingData, nftData }) => {
       <div className="relative md:w-[500px] sm:w-[300px] bg-[#161616] shadow-lg p-2 flex flex-col items-center">
         {/* Background Image Division */}
         <div
-          className="relative md:w-[485px] md:h-[230px] sm:h-[160px] sm:w-[295px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
+          className="relative md:w-[485px] md:h-[230px] sm:h-[120px] sm:w-[280px] p-6 flex flex-col justify-between rounded-md border border-red-600/70 shadow-red-600/80 shadow-sm"
           style={{
             backgroundImage: `url(${roomImage})`,
             backgroundSize: "cover",
