@@ -9,7 +9,7 @@ import { BrowserProvider } from "ethers";
 
 import { id } from "ethers";
 
-const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData,setTotalPrice }) => {
+const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData, setTotalPrice }) => {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [emailError, setEmailError] = useState("");
@@ -111,11 +111,11 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData,setTotalPri
     const phoneRegex = /^\+?\d{10}$/; // Optional + at the beginning, followed by exactly 10 digits
     return phoneRegex.test(phone);
   };
-  
+
   // Function to handle the Next button click
   const handleNext = () => {
     let isValid = true;
-  
+
     // Validate email
     if (!validateEmail(email)) {
       setEmailError("Invalid email address");
@@ -123,7 +123,7 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData,setTotalPri
     } else {
       setEmailError("");
     }
-  
+
     // Validate phone number
     if (!validatePhone(phone)) {
       setPhoneError("Invalid phone number (10 digits required)");
@@ -131,14 +131,14 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData,setTotalPri
     } else {
       setPhoneError("");
     }
-  
+
     // Proceed if all inputs are valid
     if (isValid) {
       fetchHotelData();
       onNavigate();
     }
   };
-  
+
   // Handle key press for phone number input
   const handlePhoneKeyPress = (e) => {
     // Allow numbers, Backspace, and the + symbol
@@ -146,7 +146,7 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData,setTotalPri
       e.preventDefault();
     }
   };
-  
+
   const [signature, setSignature] = useState("");
   const [error, setError] = useState("");
   const [isConnecting, setIsConnecting] = useState(false);
@@ -372,7 +372,7 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData,setTotalPri
               <button
                 className="bg-[#CA3F2A] sm:text-xs text-white md:px-[110px] sm:px-[68px] md:py-1 sm:py-1 rounded-md md:text-lg border-[#FFE3E3] border border-opacity-50"
                 onClick={handleButtonClick} // Call the combined handler
-        disabled={isConnecting} 
+                disabled={isConnecting}
               >
                 Next
               </button>
