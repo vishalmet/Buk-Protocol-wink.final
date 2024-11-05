@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react'
 import first from '../assets/updated/bg.png';
 import buk from '../assets/updated/buk.png';
-import error from '../assets/updated/error.png'
+import error from '../assets/updated/oops.png'
 import axios from "axios";
 
 
