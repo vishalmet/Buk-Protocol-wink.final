@@ -8,6 +8,7 @@ import { buyRoom } from "../ContractIntegration";
 import axios from "axios";
 import SucessConfirmation from "./SucessConfirmation";
 import Cancelled from "./Cancelled";
+import Resold from "./Resold";
 
 const StepThree = ({ onNavigate, onBack, totalPrice, tokenID, nftData }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -49,27 +50,27 @@ const [navigateTo, setNavigateTo] = useState(null); // New navigation state
     fetchBookingData();
   }, [nftData]);
 
-    const checkInDate = bookingData?.data?.checkIn
-      ? new Date(bookingData.data.checkIn)
-      : null;
-    const formattedDateCheckIn = checkInDate
-      ? `${checkInDate.getDate().toString().padStart(2, "0")}-${(
-          checkInDate.getMonth() + 1
-        )
-          .toString()
-          .padStart(2, "0")}-${checkInDate.getFullYear()}`
-      : "";
+  const checkInDate = bookingData?.data?.checkIn
+  ? new Date(bookingData.data.checkIn)
+  : null;
+const formattedDateCheckIn = checkInDate
+  ? checkInDate.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  })
+  : "";
 
-    const checkOutDate = bookingData?.data?.checkOut
-      ? new Date(bookingData.data.checkOut)
-      : null;
-    const formattedDateCheckOut = checkOutDate
-      ? checkOutDate.toLocaleDateString("en-GB", {
-          day: "2-digit",
-          month: "long",
-          year: "numeric",
-        })
-      : "";
+const checkOutDate = bookingData?.data?.checkOut
+  ? new Date(bookingData.data.checkOut)
+  : null;
+const formattedDateCheckOut = checkOutDate
+  ? checkOutDate.toLocaleDateString("en-GB", {
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  })
+  : "";
 
       const handleBuyRoom = async () => {
         setIsLoading(true);
@@ -98,7 +99,7 @@ const [navigateTo, setNavigateTo] = useState(null); // New navigation state
       if (navigateTo === "success") {
         return <div><SucessConfirmation nftData={nftData} tokenID={tokenID} /></div>; // Replace with your success component
       } else if (navigateTo === "resold") {
-        return <div><Cancelled nftData={nftData} tokenID={tokenID} /></div>; // Replace with your error/resold component
+        return <div><Resold nftData={nftData} tokenID={tokenID} /></div>; // Replace with your error/resold component
       }
 
   return (

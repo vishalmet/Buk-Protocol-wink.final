@@ -13,23 +13,41 @@ const TokenId = ({ onNavigate }) => {
       setError("Please enter a valid NFT ID.");
       return;
     }
-
+  
     try {
       const response = await axios.get(
         `https://api.polygon.dassets.xyz/v2/hotel/getNFTBooking?tokenId=${nftId}`
       );
-
-      const data = response.data;
-      if (data && data.status === true) {
-        // Pass the nftId data
-        onNavigate("launch", nftId);
-      } else {
-        setError("NFT booking details not found");
+  
+      const bookingStatus = response.data?.data?.booking?.status;
+      console.log('====================================');
+      console.log(bookingStatus);
+      console.log('====================================');
+      
+      switch (bookingStatus) {
+        case "confirmed":
+        case "listed":
+          onNavigate("launch", nftId);
+          break;
+        case "sold":
+          onNavigate("resold", nftId);
+          break;
+        case "booked":
+          setError("NFT is booked but not yet minted");
+          break;
+        case "checkedIn":
+          setError("This NFT has been checked in and is permanently locked");
+          break;
+        default:
+          setError("Invalid booking status or NFT not found");
+          break;
       }
     } catch (err) {
-      setError("NFT booking details not found");
+      console.error("Error fetching NFT booking details:", err);
+      setError("Failed to fetch NFT booking details. Please try again.");
     }
   };
+  
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">

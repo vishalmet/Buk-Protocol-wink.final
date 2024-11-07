@@ -120,10 +120,33 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
 
   // Function to validate phone number (10-digit)
   const validatePhone = (phone) => {
-    const phoneRegex = /^\+?\d{10}$/; // Optional + at the beginning, followed by exactly 10 digits
-    return phoneRegex.test(phone);
+    const cleanedNumber = phone.replace(/[\s\-\(\)]/g, '');
+    
+    // Main regex pattern components:
+    // ^            - Start of string
+    // \+?          - Optional plus sign for international format
+    // (?:[0-9]|1)? - Optional country code starting with 0-9 or 1
+    // [0-9]{7,15}  - Between 7 to 15 digits for the main number
+    // $            - End of string
+    const phoneRegex = /^\+?(?:[0-9]{1,4})?[0-9]{7,15}$/;
+  
+    // Basic validation
+    if (!cleanedNumber) {
+      return false;
+    }
+  
+    // Check minimum length (should be at least 7 digits)
+    if (cleanedNumber.replace(/\D/g, '').length < 7) {
+      return false;
+    }
+  
+    // Check maximum length (shouldn't exceed 15 digits excluding '+')
+    if (cleanedNumber.replace(/\D/g, '').length > 15) {
+      return false;
+    }
+  
+    return phoneRegex.test(cleanedNumber);
   };
-
   // Function to handle the Next button click
   const handleNext = () => {
     let isValid = true;
@@ -138,7 +161,7 @@ const StepOne = ({ bookingData, onNavigate, onBack, setData, nftData }) => {
 
     // Validate phone number
     if (!validatePhone(phone)) {
-      setPhoneError("Invalid phone number (10 digits required)");
+      setPhoneError("Invalid phone number");
       isValid = false;
     } else {
       setPhoneError("");

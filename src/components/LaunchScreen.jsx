@@ -75,8 +75,9 @@ const LaunchScreen = ({ onNavigate, nftData, setTokenID, tokenID, setTotalPrice 
     return <div className="bg-black text-white items-center justify-center flex h-screen">Loading...</div>; // Show a loading state if data is not yet fetched
   }
 
-  const TotalPrice = bookingData.data.listingDetails.price;
+  const TotalPrice = bookingData?.data?.listingDetails?.price ?? 0;
   setTotalPrice(TotalPrice);
+  
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">
