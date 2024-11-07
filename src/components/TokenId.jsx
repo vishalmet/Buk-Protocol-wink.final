@@ -19,7 +19,7 @@ const TokenId = ({ onNavigate }) => {
         `https://api.polygon.dassets.xyz/v2/hotel/getNFTBooking?tokenId=${nftId}`
       );
   
-      const bookingStatus = response.data?.data?.booking?.status;
+      const bookingStatus = response.data?.data?.status;
       console.log('====================================');
       console.log(bookingStatus);
       console.log('====================================');
