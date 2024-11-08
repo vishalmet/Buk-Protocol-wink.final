@@ -23,9 +23,24 @@ const TokenId = ({ onNavigate }) => {
       console.log('====================================');
       console.log(bookingStatus);
       console.log('====================================');
-      
+      const bookingType = response.data?.data?.bookingType;
+      console.log('====================================');
+      console.log(bookingType);
+      console.log('====================================');
+  
+      // New condition for checking bookingType and bookingStatus
+      if (bookingType === "primary" && bookingStatus === "confirmed") {
+        setError("Booking is present but NFT is not minted");
+        return;
+      }
+
+      if (bookingType === "secondary" && bookingStatus === "confirmed") {
+        onNavigate("resold", nftId);
+        return;
+      }
+  
       switch (bookingStatus) {
-        case "confirmed":
+        // case "confirmed":
         case "listed":
           onNavigate("launch", nftId);
           break;
@@ -35,8 +50,11 @@ const TokenId = ({ onNavigate }) => {
         case "booked":
           setError("NFT is booked but not yet minted");
           break;
-        case "checkedIn":
+        case "checkedin":
           setError("This NFT has been checked in and is permanently locked");
+          break;
+        case "cancelled":
+          setError("This booking has been cancelled");
           break;
         default:
           setError("Invalid booking status or NFT not found");
@@ -47,6 +65,7 @@ const TokenId = ({ onNavigate }) => {
       setError("Failed to fetch NFT booking details. Please try again.");
     }
   };
+  
   
 
   return (
