@@ -13,23 +13,60 @@ const TokenId = ({ onNavigate }) => {
       setError("Please enter a valid NFT ID.");
       return;
     }
-
+  
     try {
       const response = await axios.get(
         `https://api.polygon.dassets.xyz/v2/hotel/getNFTBooking?tokenId=${nftId}`
       );
+  
+      const bookingStatus = response.data?.data?.status;
+      console.log('====================================');
+      console.log(bookingStatus);
+      console.log('====================================');
+      const bookingType = response.data?.data?.bookingType;
+      console.log('====================================');
+      console.log(bookingType);
+      console.log('====================================');
+  
+      // New condition for checking bookingType and bookingStatus
+      if (bookingType === "primary" && bookingStatus === "confirmed") {
+        setError("Booking is present but NFT is not minted");
+        return;
+      }
 
-      const data = response.data;
-      if (data && data.status === true) {
-        // Pass the nftId data
-        onNavigate("launch", nftId);
-      } else {
-        setError("NFT booking details not found");
+      if (bookingType === "secondary" && bookingStatus === "confirmed") {
+        onNavigate("resold", nftId);
+        return;
+      }
+  
+      switch (bookingStatus) {
+        // case "confirmed":
+        case "listed":
+          onNavigate("launch", nftId);
+          break;
+        case "sold":
+          onNavigate("resold", nftId);
+          break;
+        case "booked":
+          setError("NFT is booked but not yet minted");
+          break;
+        case "checkedin":
+          setError("This NFT has been checked in and is permanently locked");
+          break;
+        case "cancelled":
+          setError("This booking has been cancelled");
+          break;
+        default:
+          setError("Invalid booking status or NFT not found");
+          break;
       }
     } catch (err) {
-      setError("NFT booking details not found");
+      console.error("Error fetching NFT booking details:", err);
+      setError("Failed to fetch NFT booking details. Please try again.");
     }
   };
+  
+  
 
   return (
     <div className="flex justify-center items-center h-screen bg-black">

@@ -6,6 +6,7 @@ import StepThree from "../components/StepThree";
 import SucessConfirmation from "../components/SucessConfirmation";
 import TokenId from "../components/TokenId";
 import Cancelled from "../components/Cancelled";
+import Resold from "../components/Resold";
 
 const UpdatedCard = () => {
   const [currentPage, setCurrentPage] = useState("tokenid");
@@ -84,7 +85,7 @@ const UpdatedCard = () => {
         />
       )}
       {currentPage === "resold" && (
-        <Cancelled
+        <Resold
           onNavigate={() => handleNavigation("launch")}
           tokenID={tokenID}
           nftData={nftData}
